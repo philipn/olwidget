@@ -1,6 +1,7 @@
 from django import forms
-
+from django.contrib.gis.forms.fields import GeometryField
 from olwidget.widgets import Map, EditableLayer, InfoLayer
+
 
 class MapField(forms.fields.Field):
     """
@@ -29,15 +30,21 @@ class MapField(forms.fields.Field):
         """
         return [f.clean(v) for v,f in zip(value, self.fields)]
 
-class EditableLayerField(forms.fields.CharField):
+class EditableLayerField(forms.CharField, GeometryField):
     """
-    Equivalent to:
+    Roughly equivalent to:
 
     forms.CharField(widget=EditableLayer(options={...}))
     """
     def __init__(self, options=None, **kwargs):
         kwargs['widget'] = kwargs.get('widget', EditableLayer(options))
         super(EditableLayerField, self).__init__(**kwargs)
+
+    def clean(self, value):
+        # Do this explicitly to ensure we convert WKT to a Geometry.
+        value = forms.CharField.clean(self, value)
+        value = GeometryField.clean(self, value)
+        return value
 
 class InfoLayerField(forms.fields.CharField):
     """

@@ -104,10 +104,11 @@ class TestForm(TestCase):
                 EditableLayerField(),
             ))
 
-        form = MyMultiForm({'mymap_0': 0, 'mymap_2': 1})
+        form = MyMultiForm({'mymap_0': 'POINT EMPTY', 'mymap_2': 'POLYGON EMPTY'})
          #print(form)
 
         self.assertTrue(form.is_bound)
+        self.assertEqual(form.errors, {})
         self.assertTrue(form.is_valid())
 
 
