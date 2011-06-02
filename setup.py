@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 import os
 
-#from distutils.core import setup
-
 try:
     from setuptools import setup, find_packages
 except ImportError:
@@ -15,7 +13,7 @@ from distutils.command.install import INSTALL_SCHEMES
 root = os.path.abspath(os.path.dirname(__file__))
 os.chdir(root)
 
-VERSION = '0.5a1-openblock'
+VERSION = '0.4+'
 
 # Make data go to the right place.
 # http://groups.google.com/group/comp.lang.python/browse_thread/thread/35ec7b2fed36eaec/2105ee4d9e8042cb

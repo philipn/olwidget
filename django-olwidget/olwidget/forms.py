@@ -77,7 +77,7 @@ class MapModelFormMetaclass(type):
 
         # Transform base fields by extracting types mentioned in 'maps'
         initial_data_keymap = apply_maps_to_modelform_fields(
-            fields, opts.maps, default_field_class=opts.default_field_class)
+                fields, opts.maps, default_field_class=opts.default_field_class)
 
         new_class.initial_data_keymap = initial_data_keymap
         new_class.declared_fields = declared_fields
@@ -108,8 +108,11 @@ def fix_cleaned_data(cleaned_data, initial_data_keymap):
     for group, keys in initial_data_keymap.iteritems():
         if cleaned_data.has_key(group):
             vals = cleaned_data.pop(group)
-            for key, val in zip(keys, vals):
-                cleaned_data[key] = val
+            if isinstance(vals, (list, tuple)):
+                for key, val in zip(keys, vals):
+                    cleaned_data[key] = val
+            else:
+                cleaned_data[keys[0]] = vals
     return cleaned_data
 
 def apply_maps_to_modelform_fields(fields, maps, default_options=None,

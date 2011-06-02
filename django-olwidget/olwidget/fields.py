@@ -3,6 +3,7 @@ from django.contrib.gis.forms.fields import GeometryField
 from olwidget.widgets import Map, EditableLayer, InfoLayer
 
 
+
 class MapField(forms.fields.Field):
     """
     Container field for map fields.  Similar to MultiValueField, but with
