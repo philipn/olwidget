@@ -1220,13 +1220,8 @@ olwidget.EditingToolbar = OpenLayers.Class(OpenLayers.Control.Panel, {
         // Keep undo button states
         OpenLayers.Event.stop(evt ? evt : window.event);
         this.activateControl(ctrl);
-<<<<<<< HEAD
-        layer.setUndoButtonStates();
-    }
-=======
         this.layer.setUndoButtonStates();
     },
->>>>>>> a10f5a8b3ecaffce95aa5c0afbaffc6133ed20fb
 });
 
 /*
