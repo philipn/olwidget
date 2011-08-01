@@ -3,3 +3,4 @@ doc/*
 *.pyc
 *.swp
 .sass-cache
+*egg-info
