@@ -1,19 +1,13 @@
 #!/usr/bin/env python
 import os
 
-try:
-    from setuptools import setup, find_packages
-except ImportError:
-    from ez_setup import use_setuptools
-    use_setuptools()
-    from setuptools import setup, find_packages
-
 from distutils.command.install import INSTALL_SCHEMES
+from distutils.core import setup
 
 root = os.path.abspath(os.path.dirname(__file__))
 os.chdir(root)
 
-VERSION = '0.4+'
+VERSION = '0.46'
 
 # Make data go to the right place.
 # http://groups.google.com/group/comp.lang.python/browse_thread/thread/35ec7b2fed36eaec/2105ee4d9e8042cb

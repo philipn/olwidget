@@ -122,12 +122,12 @@ var olwidget = {
                Also, map may need "panMethod: OpenLayers.Easing.Linear.easeOut"
                to avoid drift.  See:
 
-               http://openlayers.com/dev/examples/ve-novibrate.html
+               http://openlayers.org/dev/examples/ve-novibrate.html
 
             */
 
             var typeCode = this.types[type]();
-            return new OpenLayers.Layer.VirtualEarth("Microsoft VE (" + type + ")",
+            return new OpenLayers.Layer.VirtualEarth("Bing Maps (" + type + ")",
                 {sphericalMercator: true, minZoomLevel: 2, type: typeCode });
         },
         types: {
@@ -217,7 +217,8 @@ olwidget.Map = OpenLayers.Class(OpenLayers.Map, {
             defaultLon: 0,
             defaultLat: 0,
             defaultZoom: 4,
-            zoomToDataExtent: true
+            zoomToDataExtent: true,
+            zoomToDataExtentMin: 17
         };
 
         // deep copy all options into "defaults".
@@ -279,11 +280,11 @@ olwidget.Map = OpenLayers.Class(OpenLayers.Map, {
         }
         if (layers.length > 0) {
             this.addLayers(layers);
-            if (opts.layers.length > 0) {
-                // Only if we have some base layers.
-                // If not, user is responsible for adding some and calling initCenter.
+            if (this.baseLayer) {
+                // Only initCenter if we have base layers -- otherwise, user is
+                // responsible for adding and then calling initCenter.
                 this.initCenter();
-            };
+            }
         }
         this.selectControl = new OpenLayers.Control.SelectFeature(
             this.vectorLayers);
@@ -1219,8 +1220,13 @@ olwidget.EditingToolbar = OpenLayers.Class(OpenLayers.Control.Panel, {
         // Keep undo button states
         OpenLayers.Event.stop(evt ? evt : window.event);
         this.activateControl(ctrl);
+<<<<<<< HEAD
         layer.setUndoButtonStates();
     }
+=======
+        this.layer.setUndoButtonStates();
+    },
+>>>>>>> a10f5a8b3ecaffce95aa5c0afbaffc6133ed20fb
 });
 
 /*
