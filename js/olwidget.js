@@ -218,7 +218,7 @@ olwidget.Map = OpenLayers.Class(OpenLayers.Map, {
             defaultLat: 0,
             defaultZoom: 4,
             zoomToDataExtent: true,
-            zoomToDataExtentMin: 17,
+            zoomToDataExtentMin: 17
         };
 
         // deep copy all options into "defaults".
