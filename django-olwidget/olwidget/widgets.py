@@ -24,7 +24,7 @@ api_defaults = {
     'GOOGLE_API': "http://maps.google.com/maps?file=api&v=2",
     'YAHOO_API': "http://api.maps.yahoo.com/ajaxymap?v=3.0",
     'OSM_API': "http://openstreetmap.org/openlayers/OpenStreetMap.js",
-    'OL_API': "http://openlayers.org/api/2.9/OpenLayers.js",
+    'OL_API': "http://openlayers.org/api/2.10/OpenLayers.js",
     'MS_VE_API' : "http://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6.1",
     'CLOUDMADE_API': utils.url_join(settings.OLWIDGET_STATIC_URL, "js/cloudmade.js"),
     'OLWIDGET_JS': utils.url_join(settings.OLWIDGET_STATIC_URL, "js/olwidget.js"),
@@ -98,7 +98,20 @@ class Map(forms.Widget):
             'map_opts': simplejson.dumps(utils.translate_options(self.options)),
             'STATIC_URL': settings.STATIC_URL,
         }
+        context.update(self.get_extra_context())
         return render_to_string(self.template, context)
+
+    def get_extra_context(self):
+        """Hook that subclasses can override to add extra data for use
+        by the javascript in self.template. This is invoked by
+        self.render().
+
+        Return value should be a dictionary where keys are strings and
+        values are valid javascript, eg. JSON-encoded data.  You'll
+        also want to override the template to make use of the provided
+        data.
+        """
+        return {}
 
     def value_from_datadict(self, data, files, name):
         """ Return an array of all layers' values. """
@@ -126,7 +139,7 @@ class Map(forms.Widget):
         if (initial is None) or (not isinstance(initial, (tuple, list))):
             initial = [u''] * len(data)
         for widget, initial, data in zip(self.vector_layers, initial, data):
-            if utils.get_ogr(initial) != utils.get_ogr(data):
+            if utils.get_geos(initial) != utils.get_geos(data):
                 return True
         return False
 

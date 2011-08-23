@@ -122,12 +122,12 @@ var olwidget = {
                Also, map may need "panMethod: OpenLayers.Easing.Linear.easeOut"
                to avoid drift.  See:
 
-               http://openlayers.com/dev/examples/ve-novibrate.html
+               http://openlayers.org/dev/examples/ve-novibrate.html
 
             */
 
             var typeCode = this.types[type]();
-            return new OpenLayers.Layer.VirtualEarth("Microsoft VE (" + type + ")",
+            return new OpenLayers.Layer.VirtualEarth("Bing Maps (" + type + ")",
                 {sphericalMercator: true, minZoomLevel: 2, type: typeCode });
         },
         types: {
@@ -280,7 +280,11 @@ olwidget.Map = OpenLayers.Class(OpenLayers.Map, {
         }
         if (layers.length > 0) {
             this.addLayers(layers);
-            this.initCenter();
+            if (this.baseLayer) {
+                // Only initCenter if we have base layers -- otherwise, user is
+                // responsible for adding and then calling initCenter.
+                this.initCenter();
+            }
         }
         this.selectControl = new OpenLayers.Control.SelectFeature(
             this.vectorLayers);
@@ -1216,7 +1220,7 @@ olwidget.EditingToolbar = OpenLayers.Class(OpenLayers.Control.Panel, {
         // Keep undo button states
         OpenLayers.Event.stop(evt ? evt : window.event);
         this.activateControl(ctrl);
-        layer.setUndoButtonStates();
+        this.layer.setUndoButtonStates();
     },
 });
 
