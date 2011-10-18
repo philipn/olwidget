@@ -128,4 +128,5 @@ setup(name='django-olwidget',
         'Programming Language :: JavaScript',
         'Topic :: Software Development :: Libraries :: Application Frameworks',
     ],
+    zip_safe=False,
 )
