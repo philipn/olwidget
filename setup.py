@@ -2,9 +2,7 @@
 import os
 from fnmatch import fnmatchcase
 from distutils.util import convert_path
-
-from distutils.command.install import INSTALL_SCHEMES
-from setuptools import setup
+from setuptools import setup, find_packages
 
 root = os.path.abspath(os.path.dirname(__file__))
 os.chdir(root)
@@ -102,10 +100,10 @@ def find_package_data(
     return out
 
 
-# Make data go to the right place.
-# http://groups.google.com/group/comp.lang.python/browse_thread/thread/35ec7b2fed36eaec/2105ee4d9e8042cb
-for scheme in INSTALL_SCHEMES.values():
-    scheme['data'] = scheme['purelib']
+## Make data go to the right place.
+## http://groups.google.com/group/comp.lang.python/browse_thread/thread/35ec7b2fed36eaec/2105ee4d9e8042cb
+#for scheme in INSTALL_SCHEMES.values():
+#    scheme['data'] = scheme['purelib']
 
 setup(name='django-olwidget',
     version=VERSION,
@@ -113,7 +111,7 @@ setup(name='django-olwidget',
     author='Charlie DeTar',
     author_email='cfd@media.mit.edu',
     url='http://olwidget.org',
-    packages=['olwidget'],
+    packages=find_packages(exclude='test_project'),
     package_dir={'': 'django-olwidget'},
     package_data=find_package_data('django-olwidget/olwidget',
         package='olwidget'),
