@@ -4,12 +4,12 @@ from fnmatch import fnmatchcase
 from distutils.util import convert_path
 
 from distutils.command.install import INSTALL_SCHEMES
-from distutils.core import setup
+from setuptools import setup
 
 root = os.path.abspath(os.path.dirname(__file__))
 os.chdir(root)
 
-VERSION = '0.47'
+VERSION = '0.47-setuptools'
 
 # Provided as an attribute, so you can append to these instead
 # of replicating them:
@@ -129,4 +129,5 @@ setup(name='django-olwidget',
         'Topic :: Software Development :: Libraries :: Application Frameworks',
     ],
     zip_safe=False,
+    include_package_data=True,
 )
