@@ -52,8 +52,6 @@ def find_package_data(
     Note patterns use wildcards, or can be exact paths (including
     leading ``./``), and all searching is case-insensitive.
     """
-    
-
     out = {}
     stack = [(convert_path(where), '', package, only_in_packages)]
     while stack:
@@ -113,7 +111,19 @@ setup(name='django-olwidget',
     url='http://olwidget.org',
     packages=['olwidget'],
     package_dir={'': 'django-olwidget'},
-    package_data=find_package_data(),
+    package_data={'olwidget': [
+         'templates/olwidget/editable_layer.html',
+         'templates/olwidget/admin_olwidget.html',
+         'templates/olwidget/info_layer.html',
+         'templates/olwidget/multi_layer_map.html',
+         'templates/admin/olwidget_change_list.html',
+         'static/olwidget/css/olwidget.css',
+         'static/olwidget/js/cloudmade.js',
+         'static/olwidget/js/olwidget.js',
+         'static/olwidget/img/popup_icons.png',
+         'static/olwidget/img/jquery_ui_license.txt',
+         'static/olwidget/img/extra_edit_icons.png',
+         'static/olwidget/img/extra_edit_icons.xcf']},
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
