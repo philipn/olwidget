@@ -328,6 +328,12 @@ olwidget.Map = OpenLayers.Class(OpenLayers.Map, {
         this.addControl(new olwidget.EditableLayerSwitcher());
     },
     initCenter: function() {
+        // zoomToDataExtent == false, or there is no data on any layer
+        var center = new OpenLayers.LonLat(
+            this.opts.defaultLon, this.opts.defaultLat);
+        center = center.transform(this.displayProjection, this.projection);
+        this.setCenter(center, this.opts.defaultZoom);
+
         if (this.opts.zoomToDataExtent) {
             var extent = new OpenLayers.Bounds();
             for (var i = 0; i < this.vectorLayers.length; i++) {
@@ -348,11 +354,6 @@ olwidget.Map = OpenLayers.Class(OpenLayers.Map, {
                 return;
             }
         }
-        // zoomToDataExtent == false, or there is no data on any layer
-        var center = new OpenLayers.LonLat(
-            this.opts.defaultLon, this.opts.defaultLat);
-        center = center.transform(this.displayProjection, this.projection);
-        this.setCenter(center, this.opts.defaultZoom);
     },
     featureHighlighted: function(evt) {
         this.createPopup(evt);
